@@ -1,12 +1,9 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:gym_buddy/main.dart';
-import 'package:timezone/timezone.dart' as tz;
-
 class NotificationService {
-  Future showNotification(int id, String title, String body, DateTime? date) async {
-    AndroidNotificationDetails androidNotificationDetails = const AndroidNotificationDetails(
-      'GymBuddy',
-      'GymBuddy',
+  /*Future showNotification(int id, String title, String body, DateTime? date) async {
+    AndroidNotificationDetails androidNotificationDetails =
+    const AndroidNotificationDetails(
+      'Well.Done',
+      'Tasks',
       priority: Priority.max,
       importance: Importance.max,
     );
@@ -18,9 +15,10 @@ class NotificationService {
       body,
       scheduledTime,
       notificationDetails,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
       payload: 'notlification-payload',
     );
-  }
+  }*/
 }
