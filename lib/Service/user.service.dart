@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,13 +11,16 @@ class UserService extends GetxService {
 
   late Rx<UserModel> currentUser;
 
-  setUser(String uid) async {
+  setLocalUser(String uid) async {
     var userRef = _db.collection("Users").doc(uid);
     currentUser = UserModel.fromSnapshot(await userRef.get()).obs;
-    userRef.snapshots().listen((event) {
-      currentUser.value = UserModel.fromSnapshot(event);
+    userRef.snapshots().listen((snap) {
+      currentUser.value = UserModel.fromSnapshot(snap);
     });
-    print("User Initialized");
+  }
+
+  getUserDetails(uid) async {
+    return UserModel.fromSnapshot(await _db.collection("Users").doc(uid).get());
   }
 
   createUser(UserModel user) async {
@@ -38,9 +39,5 @@ class UserService extends GetxService {
         .update(user.toJSON())
         .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
         .catchError((error, stackTrace) => EasyLoading.showError('error'.tr));
-  }
-
-  getUserDetails(uid) async {
-    return UserModel.fromSnapshot(await _db.collection("Users").doc(uid).get());
   }
 }

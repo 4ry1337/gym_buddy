@@ -1,33 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'index.model.dart';
-
 class UserModel {
   String id;
   String username;
   String email;
   String? profilePicture;
   Timestamp? createdAt;
-  DocumentReference<Map<String, dynamic>>? currentProgram;
-  List<DocumentReference<Map<String, dynamic>>>? programs;
-  List<DocumentReference<Map<String, dynamic>>>? exercises;
+  String? currentProgram;
+  List<String> programs;
+  List<String> exercises;
 
   UserModel({
     required this.id,
     required this.username,
     required this.email,
     this.profilePicture,
-    this.programs,
-    this.exercises,
+    required this.programs,
+    required this.exercises,
     this.currentProgram,
     this.createdAt,
-  }){
-    programs = programs ?? const [];
-    exercises = exercises ?? const [];
+  }) {
     createdAt = createdAt ?? Timestamp.now();
   }
 
-  toJSON(){
+  toJSON() {
     return {
       "username": username,
       "email": email,
@@ -39,7 +35,7 @@ class UserModel {
     };
   }
 
-  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document){
+  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return UserModel(
       id: document.id,
@@ -48,6 +44,8 @@ class UserModel {
       profilePicture: data["profilePicture"],
       createdAt: data["createdAT"],
       currentProgram: data["currentProgram"],
+      programs: List<String>.from(data["programs"] ?? []),
+      exercises: List<String>.from(data["exercises"] ?? []),
     );
   }
 }

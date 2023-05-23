@@ -22,7 +22,7 @@ class AppService extends GetxService {
 
   _setInitialScreen(User? user) async {
     if (user != null) {
-      await UserService.instance.setUser(user.uid);
+      await UserService.instance.setLocalUser(user.uid);
       Get.toNamed(Routes.home);
     } else {
       Get.toNamed(Routes.auth);

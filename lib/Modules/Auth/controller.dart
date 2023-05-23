@@ -30,7 +30,9 @@ class AuthController extends GetxController{
       id: AppService.instance.firebaseUser.value!.uid,
       username: username,
       email: email,
-      createdAt: Timestamp.now()
+      createdAt: Timestamp.now(),
+        programs: [],
+      exercises: [],
     );
     await UserService.instance.createUser(user);
   }

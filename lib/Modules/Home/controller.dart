@@ -9,6 +9,6 @@ class HomeController extends GetxController {
   toProgramPage() => Get.toNamed(Routes.program);
 
   Stream<List<ProgramModel>> getPrograms(){
-    return ProgramService.instance.getPrograms(UserService.instance.currentUser.value.id);
+    return ProgramService.instance.getProgramsFromUserID(UserService.instance.currentUser.value.id);
   }
 }
