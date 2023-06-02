@@ -10,7 +10,7 @@ class GuidePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        backButton: true,
+        leading: const BackButton(),
         title: Text('guide'.tr),
       ),
       body: SingleChildScrollView(

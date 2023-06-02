@@ -10,8 +10,9 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx((){
-      return Card(
+    return Obx(()=>Card(
+      margin: AppPadding.p0,
+      shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.br24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,24 +32,8 @@ class Calendar extends StatelessWidget {
                 titleTextStyle: AppTypography.subtitle.copyWith(fontWeight: FontWeight.w600),
                 titleCentered: true,
                 formatButtonVisible: false,
-                leftChevronIcon: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onInverseSurface,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(Icons.chevron_left),
-                ),
-                rightChevronIcon: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onInverseSurface,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(Icons.chevron_right),
-                ),
-                rightChevronPadding: AppPadding.p0,
-                leftChevronPadding: AppPadding.p0,
-                rightChevronMargin: AppPadding.p0,
-                leftChevronMargin: AppPadding.p0,
+                leftChevronIcon: Icon(Icons.chevron_left),
+                rightChevronIcon: Icon(Icons.chevron_right),
               ),
               daysOfWeekStyle: const DaysOfWeekStyle(
                 weekdayStyle: AppTypography.footnote,
@@ -85,7 +70,6 @@ class Calendar extends StatelessWidget {
             )
           ],
         ),
-      );
-    });
+      ));
   }
 }

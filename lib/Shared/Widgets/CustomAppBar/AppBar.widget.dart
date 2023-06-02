@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 import '../../index.dart';
 
@@ -8,12 +6,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.backButton,
+    this.leading,
     this.actions,
+    this.centerTitle,
   });
 
-  final bool? backButton;
-  final Text title;
+  final bool? centerTitle;
+  final Widget title;
+  final Widget? leading;
   final List<Widget>? actions;
 
   @override
@@ -32,14 +32,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+      centerTitle: centerTitle,
       elevation: 0,
-      automaticallyImplyLeading: false,
-      leading: backButton == null || backButton == false ? null : TextButton(
-        child: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Get.back();
-        },
-      ),
+      leading: leading,
       title: title,
       actions: actions,
     );

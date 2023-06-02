@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Data/Model/index.model.dart';
+import 'package:gym_buddy/Service/index.dart';
 import 'package:gym_buddy/Shared/index.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -16,15 +16,24 @@ class HomePage extends GetView<HomeController> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        title: const Text("Hello, Rakhat"),
+        title: Text.rich(
+            TextSpan(
+                text: 'hello'.tr,
+                children: AppService.instance.user.value.username != null ? [
+                  const TextSpan(text: ', '),
+                  TextSpan(text: AppService.instance.user.value.username),
+                ] : []
+            )
+        ),
         actions: [
-          TextButton(
+          IconButton(
             onPressed: () {
               controller.toProfilePage();
             },
-            child: const Icon(Iconsax.profile_circle) ??
+            icon: const Icon(Iconsax.profile_circle) ??
                 CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/male.jpg')),
+                    backgroundImage: AssetImage('assets/images/male.jpg')
+                ),
           ),
         ],
       ),
@@ -32,97 +41,74 @@ class HomePage extends GetView<HomeController> {
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Padding(padding: AppPadding.p16h, child: HeroSection()),
-              Column(
-                children: [
-                  Padding(
-                    padding: AppPadding.p16h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: AppPadding.p16,
-                          child: Text('programs'.tr,
-                              style: AppTypography.subtitle),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            controller.toProgramPage();
-                          },
-                          child: const Icon(Iconsax.add),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 100,
-                    padding: AppPadding.p16h,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          StreamBuilder(
-                            stream: controller.getPrograms(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                final List<ProgramModel> programs = snapshot.data!;
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: programs.length,
-                                    itemBuilder: (context, index) {
-                                      return Card(
-                                        child: InkWell(
-                                          customBorder: Theme.of(context)
-                                              .cardTheme
-                                              .shape,
-                                          onTap: () {
-                                            debugPrint(programs[index].id);
-                                          },
-                                          child: Container(
-                                              width: 200,
-                                              padding: AppPadding.p8,
-                                              child: Center(
-                                                child: Text(programs[index].programName),
-                                              )),
-                                        ),
-                                      );
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text(snapshot.error.toString());
-                              } else {
-                                return const CircularProgressIndicator();
-                              }
-                            },
-                          ),
-                          Card(
-                            child: InkWell(
-                              customBorder: Theme.of(context).cardTheme.shape,
-                              onTap: () {
-                                debugPrint('new program');
-                              },
-                              child: Container(
-                                  width: 200,
-                                  padding: AppPadding.p8,
-                                  child: Center(
-                                    child: Text('addProgram'.tr),
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              Container(
+                  padding: AppPadding.p16h,
+                  child: HeroSection(
+                    workoutTitle: AppService.instance.user.value.currentProgramId,
+                  )
               ),
-              const SizedBox(height: AppSpacing.s16),
+              Container(
+                padding: AppPadding.p16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('programs'.tr, style: AppTypography.subtitle),
+                    IconButton(
+                        onPressed: (){
+                          controller.toAddProgramPage();
+                        },
+                        icon: Icon(Iconsax.add)
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 100,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: AppSpacing.s16),
+                      Obx(()=> ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: AppService.instance.programs.value.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                margin: AppPadding.p0,
+                                clipBehavior: Clip.hardEdge,
+                                child: InkWell(
+                                  onTap: () {
+                                    controller.toProgramPage(AppService.instance.programs.value[index]);
+                                  },
+                                  child: Container(
+                                      width: 200,
+                                      padding: AppPadding.p8,
+                                      child: Center(child: Text(AppService.instance.programs.value[index].title))),
+                                ),
+                              );
+                            }, separatorBuilder: (BuildContext context, int index) => const SizedBox(width: AppSpacing.s8)
+                      )),
+                      const SizedBox(width: AppSpacing.s16),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: AppPadding.p16,
+                child: Text('history'.tr, style: AppTypography.subtitle),
+              ),
               Flexible(
-                  child: Padding(padding: AppPadding.p16h, child: Calendar())),
+                  child: Container(
+                      padding: AppPadding.p16h,
+                      child: Calendar()
+                  )
+              ),
             ],
           ),
         ),

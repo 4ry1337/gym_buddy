@@ -13,7 +13,7 @@ class LanguagesPage extends GetView<SettingsController> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text('languages'.tr),
-        backButton: true,
+        leading: const BackButton(),
       ),
       body: SafeArea(
         child: Column(

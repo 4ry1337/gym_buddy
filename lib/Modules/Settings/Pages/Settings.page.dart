@@ -16,7 +16,7 @@ class SettingsPage extends GetView<SettingsController> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text('settings'.tr),
-        backButton: true,
+        leading: const BackButton(),
       ),
       body: SafeArea(
         child: Column(

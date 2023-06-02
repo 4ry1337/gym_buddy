@@ -10,7 +10,7 @@ class AboutUsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        backButton: true,
+        leading: const BackButton(),
         title: Text('aboutUs'.tr),
       ),
       body: SingleChildScrollView(

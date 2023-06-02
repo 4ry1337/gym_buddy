@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Service/app.service.dart';
 
-import '../../Data/Model/index.model.dart';
-import '../../Service/index.dart';
+import '../../../Data/Model/index.model.dart';
+import '../../../Service/index.dart';
 
 
 class AuthController extends GetxController{
@@ -31,8 +30,15 @@ class AuthController extends GetxController{
       username: username,
       email: email,
       createdAt: Timestamp.now(),
-        programs: [],
-      exercises: [],
+    );
+    await UserService.instance.createUser(user);
+  }
+
+  Future<void> signUpGuest() async {
+    await AuthService.instance.signInAnonymously();
+    final user = UserModel(
+      id: AppService.instance.firebaseUser.value!.uid,
+      createdAt: Timestamp.now(),
     );
     await UserService.instance.createUser(user);
   }

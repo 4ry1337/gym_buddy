@@ -15,7 +15,7 @@ class UnitsPage extends GetView<SettingsController> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text('units'.tr),
-        backButton: true,
+        leading: const BackButton(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

@@ -14,7 +14,7 @@ class EditProfilePage extends GetView<EditProfileController> {
     return Scaffold(
       appBar: CustomAppBar(
         title: Text('editProfile'.tr),
-        backButton: true,
+        leading: const BackButton(),
       ),
       body: SafeArea(
         child: Padding(

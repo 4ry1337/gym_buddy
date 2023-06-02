@@ -16,66 +16,66 @@ class ProfilePage extends GetView<ProfileController> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text('profile'.tr),
-        backButton: true,
+        leading: const BackButton(),
         actions: [
-          TextButton(
+          IconButton(
             onPressed: () {
               controller.toEdiProfilePage();
             },
-            child: Text('editProfile'.tr),
+            icon: Icon(Iconsax.edit),
           ),
-          TextButton(
+          IconButton(
             onPressed: () {
               controller.toSettingsPage();
             },
-            child: Text('settings'.tr),
+            icon: Icon(Iconsax.setting),
           ),
         ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
-          minimum: AppPadding.p24,
           child: Column(
             children: [
-              Obx(()=>Card(
-                child: Container(
-                  padding: AppPadding.p16,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: FittedBox(
-                          child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),) ??
-                              const CircleAvatar(
-                                backgroundImage:
-                                AssetImage('assets/images/male.jpg'),
-                              ),
-                        ),
+              Obx(()=>Container(
+                padding: AppPadding.p16h + AppPadding.p0v,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: FittedBox(
+                        child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),) ??
+                            const CircleAvatar(
+                              backgroundImage:
+                              AssetImage('assets/images/male.jpg'),
+                            ),
                       ),
-                      const SizedBox(width: AppSpacing.s8),
-                      Column(
+                    ),
+                    const SizedBox(width: AppSpacing.s16),
+                    Flexible(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "@${UserService.instance.currentUser.value.username}",
-                            style: AppTypography.h5.copyWith(fontWeight: FontWeight.w600),
+                            AppService.instance.user.value.username ?? 'guest'.tr,
+                            style: AppTypography.h3.copyWith(fontWeight: FontWeight.w600),
                           ),
-                          const SizedBox(height: AppSpacing.s8),
                           Text(
-                            UserService.instance.currentUser.value.email,
+                            AppService.instance.user.value.email ?? 'link with google or appleid',
                             style: AppTypography.subtitle,
                           ),
-                          if(UserService.instance.currentUser.value.createdAt != null) ...[
+                          if(AppService.instance.user.value.createdAt != null) ...[
                             const SizedBox(height: AppSpacing.s8),
                             Text(
-                              "Joined ${DateFormat('dd MM yyyy').format(UserService.instance.currentUser.value.createdAt!.toDate())}",
+                              "Joined ${DateFormat('dd MM yyyy').format(AppService.instance.user.value.createdAt!.toDate())}",
                               style: AppTypography.subtitle.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
                             ),
-                          ]
+                          ],
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )),
             ],

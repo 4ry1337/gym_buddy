@@ -7,4 +7,4 @@ export 'Config/Translations/ru_RU.translation.dart';
 export 'Config/Translations/Strings.enum.dart';
 export 'Constants/enums.dart';
 export 'Utils/Clippers/Clipper.dart';
-export 'Utils/trimText.dart';
+export 'Utils/index.dart';

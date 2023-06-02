@@ -4,7 +4,7 @@ mixin AppSpacing {
   static const s24 = 24.0;
   static const s16 = 16.0;
   static const s8 = 8.0;
-  static const s0 = 8.0;
+  static const s0 = 0.0;
 }
 
 mixin AppPadding {

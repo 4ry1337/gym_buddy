@@ -9,59 +9,57 @@ class ProgramService extends GetxService {
 
   final _db = FirebaseFirestore.instance;
 
-  Future<void> addProgram(ProgramModel program) async {
+  fetchProgram({required UserModel user, required String programId}) async {
+    return ProgramModel.fromSnapshot(await _db.collection("Users").doc(user.id).collection("Programs").doc(programId).get());
+  }
+
+  fetchPrograms(UserModel user) async {
+    List<ProgramModel> programs = [];
+    await _db.collection("Users").doc(user.id).collection('Programs').get().then(
+            (programSnapshots){
+              for(var programSnapshot in programSnapshots.docs){
+                programs.add(ProgramModel.fromSnapshot(programSnapshot));
+              }
+            }
+    );
+    return programs;
+  }
+
+  Stream streamPrograms({required UserModel user}){
+    return _db.collection("Users").doc(user.id).collection("Programs").snapshots();
+  }
+
+  createProgram({required UserModel user, required ProgramModel program}) async {
     await _db
+        .collection("Users")
+        .doc(user.id)
         .collection("Programs")
         .add(program.toJSON())
         .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
-        .catchError((error, stackTrace) {
-      EasyLoading.showError('error'.tr);
-    });
+        .catchError((error, stackTrace) => EasyLoading.showError('error'.tr));
   }
 
-  Future<ProgramModel> getProgramByDocumentPath(String documentPath) async {
-    return ProgramModel.fromSnapshot(await _db.doc(documentPath).get());
-  }
-
-  Future<ProgramModel> getProgramByID(String id) async {
-    return ProgramModel.fromSnapshot(
-        await _db.collection("Programs").doc(id).get());
-  }
-
-  Future<List<ProgramModel>> getPrograms(List<String> ids) async {
-    return await _db.collection("Programs").where(FieldPath.documentId, whereIn: ids).get().then(
-          (querySnapshot) {
-            List<ProgramModel> list = [];
-            for (var docSnapshot in querySnapshot.docs) {
-              list.add(ProgramModel.fromSnapshot(docSnapshot));
-            }
-            return list;
-          },
+  deleteProgram({required UserModel user, required ProgramModel program}) async {
+    _db.collection("Users").doc(user.id).collection('Programs').doc(program.id).delete()
+        .then((doc) => EasyLoading.showSuccess('deleted'.tr),
+      onError: (e) {
+        print("Error updating document $e");
+        EasyLoading.showError('error'.tr);
+      },
     );
   }
 
-  Stream<List<ProgramModel>> getProgramsFromUserID(String uid) {
-    return _db.collection('Users').doc(uid).snapshots().map((snapshot) => UserModel.fromSnapshot(snapshot).programs)
-        .asyncMap((programRefs) async {
-          final programSnaps = await Future.wait(programRefs.map((ref)=> _db.collection('Programs').doc(ref).get()));
-          return programSnaps.map((e) => ProgramModel.fromSnapshot(e)).toList();
-        });
-    // _db.collection("Programs").where(FieldPath.documentId, whereIn: ids).get().then(
-    //       (querySnapshot) {
-    //     List<ProgramModel> list = [];
-    //     for (var docSnapshot in querySnapshot.docs) {
-    //       list.add(ProgramModel.fromSnapshot(docSnapshot));
-    //     }
-    //     return list;
-    //   },
-    // );
+  updateProgram({required UserModel user, required ProgramModel program}) async {
+    await _db
+        .collection("Users")
+        .doc(user.id)
+        .collection("Programs")
+        .doc(program.id)
+        .update(program.toJSON())
+        .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
+        .catchError((error, stackTrace) {
+      print(error);
+      EasyLoading.showError('error'.tr);
+    });
   }
-
-  /*Future<void> editProgram(String id) async {
-    EasyLoading.showSuccess('editCategory'.tr);
-  }
-
-  Future<void> deleteProgram(String id) async {
-    EasyLoading.showSuccess('categoryDelete'.tr);
-  }*/
 }

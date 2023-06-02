@@ -9,18 +9,25 @@ class UserService extends GetxService {
 
   final _db = FirebaseFirestore.instance;
 
-  late Rx<UserModel> currentUser;
-
-  setLocalUser(String uid) async {
+  fetchUser(uid) async {
     var userRef = _db.collection("Users").doc(uid);
-    currentUser = UserModel.fromSnapshot(await userRef.get()).obs;
-    userRef.snapshots().listen((snap) {
-      currentUser.value = UserModel.fromSnapshot(snap);
-    });
+    return UserModel.fromSnapshot(await userRef.get());
   }
 
-  getUserDetails(uid) async {
-    return UserModel.fromSnapshot(await _db.collection("Users").doc(uid).get());
+  fetchUsers() async {
+    List<UserModel> users = [];
+    _db.collection("Users").get().then(
+        (userSnap){
+          for(var userSnap in userSnap.docs){
+            users.add(UserModel.fromSnapshot(userSnap));
+          }
+        }
+    );
+    return users;
+  }
+
+  Stream streamUser(uid){
+    return _db.collection("Users").doc(uid).snapshots();
   }
 
   createUser(UserModel user) async {
@@ -38,6 +45,9 @@ class UserService extends GetxService {
         .doc(user.id)
         .update(user.toJSON())
         .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
-        .catchError((error, stackTrace) => EasyLoading.showError('error'.tr));
+        .catchError((error, stackTrace) {
+          print(error);
+          EasyLoading.showError('error'.tr);
+    });
   }
 }

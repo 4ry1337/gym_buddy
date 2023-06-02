@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Modules/Auth/widgets/SignIn.widget.dart';
 
-import '../../Shared/index.dart';
-import 'controller.dart';
+import '../../../Shared/index.dart';
+import '../controllers/auth.controller.dart';
 import 'Widgets/SignUp.widget.dart';
+import 'Widgets/SignIn.widget.dart';
 
 class AuthPage extends GetView<AuthController> {
   const AuthPage({Key? key}) : super(key: key);
@@ -51,6 +51,7 @@ class AuthPage extends GetView<AuthController> {
           ),
         ),
         body: const TabBarView(
+          physics: ScrollPhysics(),
           children: [
             SignUpWidget(),
             SignInWidget(),

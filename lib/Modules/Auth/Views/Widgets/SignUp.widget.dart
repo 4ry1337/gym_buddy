@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:gym_buddy/Shared/index.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../Shared/index.dart';
-import '../controller.dart';
+import '../../controllers/auth.controller.dart';
+
 
 class SignUpWidget extends GetView<AuthController> {
   const SignUpWidget({super.key});
@@ -13,7 +14,7 @@ class SignUpWidget extends GetView<AuthController> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     return Column(
-      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           child: Container(
@@ -22,7 +23,7 @@ class SignUpWidget extends GetView<AuthController> {
                   image: const DecorationImage(
                     image: AssetImage('assets/images/male.jpg'),
                     fit: BoxFit.cover,
-                  )
+                  ),
               ),
               alignment: Alignment.bottomLeft,
               child: Padding(
@@ -95,7 +96,7 @@ class SignUpWidget extends GetView<AuthController> {
                   const Spacer(),
                   OutlinedButton(
                       onPressed: () {
-
+                        controller.signUpGuest();
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

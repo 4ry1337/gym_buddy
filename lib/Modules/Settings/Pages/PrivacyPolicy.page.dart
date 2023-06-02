@@ -11,7 +11,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        backButton: true,
+        leading: const BackButton(),
         title: Text('privacyPolicy'.tr),
       ),
       body: SingleChildScrollView(

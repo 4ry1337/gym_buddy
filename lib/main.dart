@@ -21,16 +21,17 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      splitScreenMode: false,
+      useInheritedMediaQuery: true,
       minTextAdapt: true,
-      splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
           title: "GymBuddy",
           translations: LocalizationService.getInstance(),
           locale: SettingsService.getCurrentLocale(),
-          fallbackLocale: LocalizationService.defaultLanguage,
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.darkTheme ,
+          fallbackLocale: LocalizationService.defaultLanguage,
+          theme: AppTheme.darkTheme,
           home: Builder(
             builder: (BuildContext context){
               Get.put(AppService());

@@ -14,7 +14,7 @@ class NotificationsPage extends GetView<SettingsController> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text('notifications'.tr),
-        backButton: true,
+        leading: const BackButton(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

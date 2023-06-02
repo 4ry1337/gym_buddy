@@ -1,14 +1,15 @@
 import 'package:get/get.dart';
+import 'package:gym_buddy/Service/app.service.dart';
 import '../../Data/Model/index.model.dart';
-import '../../Service/index.dart';
 import '../Routes.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find();
   toProfilePage() => Get.toNamed(Routes.profile);
-  toProgramPage() => Get.toNamed(Routes.program);
-
-  Stream<List<ProgramModel>> getPrograms(){
-    return ProgramService.instance.getProgramsFromUserID(UserService.instance.currentUser.value.id);
-  }
+  toProgramPage(ProgramModel programModel) => Get.toNamed(Routes.program, arguments: {
+    "programModel": programModel
+  });
+  toAddProgramPage() => Get.toNamed(Routes.program + Routes.edit, arguments: {
+    "programModel": null
+  });
 }

@@ -5,8 +5,11 @@ import 'package:iconsax/iconsax.dart';
 import '../../../Shared/index.dart';
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
-
+  const HeroSection({
+    super.key,
+    this.workoutTitle
+  });
+  final String? workoutTitle;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -16,28 +19,39 @@ class HeroSection extends StatelessWidget {
       },
       child: Theme(
         data: ThemeData(
-          cardTheme: Theme.of(context).cardTheme,
           cardColor: Theme.of(context).colorScheme.primary,
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.br24),
+          ),
         ),
         child: Card(
+          margin: AppPadding.p0,
           child: Container(
+            height: 150,
             padding: AppPadding.p16,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Today', style: AppTypography.subtitle,
-                    ),
-                    Text(
-                      'Leg Day', style: AppTypography.h1.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                Flexible(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: workoutTitle != null ? [
+                      const Text(
+                        'Today', style: AppTypography.subtitle,
+                      ),
+                      Text(
+                        workoutTitle!,
+                        style: AppTypography.h1.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    ] : [
+                      Text(
+                        'no program is selected',
+                        style: AppTypography.h1.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
                 const Icon(Iconsax.arrow_right_3, size: 50)
               ],

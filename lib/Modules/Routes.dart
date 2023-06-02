@@ -5,11 +5,12 @@ import 'index.dart';
 class Routes {
   Routes._();
   static String auth = '/auth';
+  static String verify = '/verify';
   static String home = '/home';
-  static String profile = '/profile';
-  static String editProfile = '/edit';
+  static String edit = '/edit';
 
   static String start = '/start';
+  static String profile = '/profile';
   static String program = '/program';
   static String workout = '/workout';
   static String exercise = '/exercise';
@@ -28,6 +29,14 @@ class Routes {
       page: () => const AuthPage(),
       binding: AuthBinding(),
       transition: Transition.fadeIn,
+      children: [
+        GetPage(
+          name: Routes.verify,
+          page: () => const VerificationPage(),
+          binding: VerificationBinding(),
+          transition: Transition.fadeIn,
+        ),
+      ]
     ),
     GetPage(
       name: Routes.home,
@@ -40,6 +49,27 @@ class Routes {
       page: () => const ProgramPage(),
       binding: ProgramBinding(),
       transition: Transition.fadeIn,
+      children: [
+        GetPage(
+            name: Routes.workout,
+            page: () => const WorkoutPage(),
+          binding: WorkoutBinding()
+        ),
+        GetPage(
+          name: Routes.edit,
+          page: () => const EditProgramPage(),
+          binding: ProgramBinding(),
+          transition: Transition.rightToLeft,
+          children: [
+            GetPage(
+                name: Routes.workout,
+                page: () => const WorkoutPage(),
+                binding: WorkoutBinding(),
+              transition: Transition.fadeIn,
+            ),
+          ]
+        ),
+      ]
     ),
     //profile
     GetPage(
@@ -47,22 +77,19 @@ class Routes {
         page: () => const ProfilePage(),
         binding: ProfileBinding(),
         transition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 300),
         children: [
           //edit profile
           GetPage(
-            name: Routes.editProfile,
+            name: Routes.edit,
             page: () => const EditProfilePage(),
             binding: EditProfileBinding(),
             transition: Transition.rightToLeft,
-            transitionDuration: const Duration(milliseconds: 300),
           ),
           GetPage(
               name: Routes.settings,
               page: () => const SettingsPage(),
               binding: SettingsBinding(),
               transition: Transition.rightToLeft,
-              transitionDuration: const Duration(milliseconds: 300),
               children: [
                 GetPage(
                     name: Routes.languages,

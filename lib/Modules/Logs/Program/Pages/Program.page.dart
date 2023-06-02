@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Data/Model/index.model.dart';
+import 'package:gym_buddy/Shared/Widgets/CustomAppBar/AppBar.widget.dart';
 
 import 'package:gym_buddy/Shared/index.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 import '../controller.dart';
 
@@ -12,54 +14,99 @@ class ProgramPage extends GetView<ProgramController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: AppColors.accent,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).colorScheme.background,
-                Theme.of(context).colorScheme.background.withOpacity(0),
-              ],
-            ),
+      appBar: CustomAppBar(
+        actions: [
+          IconButton(
+              onPressed: (){
+                controller.toEditProgramPage();
+              },
+            icon: const Icon(Iconsax.edit),
           ),
-        ),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        leading: TextButton(
-          child: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        title: TextFormField(
-          controller: controller.programTitle,
-          decoration: const InputDecoration(
-            hintText: 'New Program',
-          ),
-        ),
+        ],
+        centerTitle: true,
+        leading: const BackButton(),
+        title: Text('program'.tr),
       ),
       body: SafeArea(
-        minimum: AppPadding.p24,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: Placeholder(),
-                /*child: StreamBuilder<List<WorkoutModel>>(
-                  stream: controller.workouts,
-                  builder: (context, AsyncSnapshot<List<WorkoutModel>> listData){
-                    switch
-                  },
-                )*/
+            Container(
+              padding: AppPadding.p16h,
+              child: Obx(()=>Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.program.value.title,
+                    style: AppTypography.h5,
+                  ),
+                  const SizedBox(height: AppSpacing.s8),
+                  Text.rich(
+                      TextSpan(
+                          text: 'createdBy'.tr,
+                          children: [
+                            const TextSpan(text: ' '),
+                            TextSpan(text: controller.program.value.createdBy,),
+                          ]
+                      )
+                  ),
+                  const SizedBox(height: AppSpacing.s8),
+                  Text(
+                    DateFormat('dd MM yyyy').format(controller.program.value.createdAt!.toDate()),
+                    style: AppTypography.subtitle,
+                  ),
+                ],
+              )),
             ),
             const SizedBox(height: AppSpacing.s16),
-            FilledButton(
-                onPressed: (){},
-                child: Text('Create'.tr),
-            )
+            Expanded(
+              child: Container(
+                padding: AppPadding.p16h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'workouts'.tr,
+                      style: AppTypography.h4,
+                    ),
+                    const SizedBox(height: AppSpacing.s8),
+                    Expanded(
+                      child: controller.program.value.workouts.isEmpty ?
+                      const Center(
+                          child: Text('no workouts')
+                      ) : Obx(()=> ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection:  Axis.vertical,
+                        itemCount: controller.program.value.workouts.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: AppPadding.p0,
+                            clipBehavior: Clip.hardEdge,
+                            child: ExpansionTile(
+                              title: Container(
+                                padding: AppPadding.p16,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      controller.program.value.workouts[index].title,
+                                      style: AppTypography.h5,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }, separatorBuilder: (BuildContext context, int index)=>const SizedBox(height: AppSpacing.s8),)
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
