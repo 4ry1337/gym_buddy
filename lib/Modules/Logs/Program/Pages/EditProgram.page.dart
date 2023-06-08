@@ -18,7 +18,7 @@ class EditProgramPage extends GetView<ProgramController> {
             Get.back();
           },
         ),
-        title: TextFormField(
+        title: TextField(
           controller: controller.programTitle,
           decoration: InputDecoration(
             hintText: 'newProgram'.tr,

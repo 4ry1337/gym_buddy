@@ -32,8 +32,6 @@ class Calendar extends StatelessWidget {
                 titleTextStyle: AppTypography.subtitle.copyWith(fontWeight: FontWeight.w600),
                 titleCentered: true,
                 formatButtonVisible: false,
-                leftChevronIcon: Icon(Icons.chevron_left),
-                rightChevronIcon: Icon(Icons.chevron_right),
               ),
               daysOfWeekStyle: const DaysOfWeekStyle(
                 weekdayStyle: AppTypography.footnote,
@@ -61,6 +59,7 @@ class Calendar extends StatelessWidget {
                 selectedTextStyle: AppTypography.footnote.copyWith(color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
+            const Divider(),
             Padding(
               padding: AppPadding.p8,
               child: FilledButton.tonal(

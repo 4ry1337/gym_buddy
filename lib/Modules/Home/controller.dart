@@ -5,6 +5,12 @@ import '../Routes.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find();
+  @override
+  onReady() {
+    AppService.instance.listenUser();
+    AppService.instance.listenProgram();
+    super.onReady();
+  }
   toProfilePage() => Get.toNamed(Routes.profile);
   toProgramPage(ProgramModel programModel) => Get.toNamed(Routes.program, arguments: {
     "programModel": programModel

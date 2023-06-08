@@ -45,7 +45,7 @@ class ProfilePage extends GetView<ProfileController> {
                       height: 100,
                       width: 100,
                       child: FittedBox(
-                        child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),) ??
+                        child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)) ??
                             const CircleAvatar(
                               backgroundImage:
                               AssetImage('assets/images/male.jpg'),

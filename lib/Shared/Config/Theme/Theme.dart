@@ -8,22 +8,53 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      cardColor: AppColors.dark2,
-      appBarTheme: AppBarTheme(
-        surfaceTintColor: AppColors.transparent,
-        actionsIconTheme: const IconThemeData(
-          color: AppColors.white,
-        ),
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.black,
-        ),
+      appBarTheme: const AppBarTheme(
         elevation: 0,
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.transparent,
-        titleTextStyle: AppTypography.h5.copyWith(fontWeight: FontWeight.w400),
       ),
-      colorScheme: AppColors.colorScheme,
-      scaffoldBackgroundColor: AppColors.colorScheme.background
+      colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: AppColors.darkAccent,
+        onPrimary: AppColors.dark3,
+        secondary: AppColors.dark3,
+        onSecondary: AppColors.white,
+        error: AppColors.error,
+        onError: AppColors.white,
+        background: AppColors.dark1,
+        onBackground: AppColors.dark3,
+        surface: AppColors.dark2,
+        onSurface: AppColors.white,
+        onInverseSurface: AppColors.dark3,
+        surfaceTint: AppColors.transparent,
+        outline: AppColors.dark3,
+      ),
+    );
+  }
+
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+        foregroundColor: AppColors.black,
+        backgroundColor: AppColors.transparent,
+      ),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xff566EED),
+          onPrimary: AppColors.white,
+          secondary: AppColors.white,
+          onSecondary: Color(0xff566EED),
+          background: Color(0xfff7f7ff),
+          onBackground: AppColors.black,
+          error: AppColors.error,
+          onError: AppColors.white,
+          surface: Color(0xffffffff),
+          onSurface: AppColors.black,
+          surfaceTint: AppColors.transparent
+      ),
     );
   }
 }

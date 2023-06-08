@@ -42,7 +42,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                           padding: AppPadding.p0,
                           iconSize: 20,
                           onPressed: (){},
-                            icon: Icon(Iconsax.gallery_edit)
+                            icon: Icon(Iconsax.gallery_edit, color: Theme.of(context).colorScheme.onBackground)
                         ),
                       ),
                     ],

@@ -63,9 +63,16 @@ class Routes {
           children: [
             GetPage(
                 name: Routes.workout,
-                page: () => const WorkoutPage(),
+                page: () => const EditWorkoutPage(),
                 binding: WorkoutBinding(),
               transition: Transition.fadeIn,
+              children: [
+                GetPage(
+                    name: Routes.exercise,
+                    page: () => const AddExercise(),
+                  transition: Transition.fadeIn,
+                )
+              ]
             ),
           ]
         ),

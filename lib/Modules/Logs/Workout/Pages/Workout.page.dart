@@ -15,48 +15,47 @@ class WorkoutPage extends GetView<WorkoutController> {
         centerTitle: true,
         title: Text('Workout'.tr),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
-        child: Icon(Icons.add),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: AppPadding.p16,
-              child: Text(
-                'exercies'.tr,
-                style: AppTypography.h4,
-              ),
-            ),
-            Expanded(
-                child: controller.workout.value.exercises.isNotEmpty ?
-                Obx(() => ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: controller.workout.value.exercises.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        margin: AppPadding.p0,
-                        clipBehavior: Clip.hardEdge,
-                        child: Container(
-                            width: 200,
-                            padding: AppPadding.p8,
-                            child: Column(
-                                children: [
-                                  Text(controller.workout.value.exercises[index].name),
-                                  Text(controller.workout.value.exercises[index].exerciseType.name),
-                                ]
-                            )
+      body: SingleChildScrollView(
+        child: SafeArea(
+          minimum: AppPadding.p16h,
+          child:
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'exercies'.tr,
+                      style: AppTypography.h4,
+                    ),
+                    const SizedBox(height: AppSpacing.s8),
+                    Obx((){
+                      if(controller.workout.value.exercises.isNotEmpty){
+                        return ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: controller.workout.value.exercises.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                margin: AppPadding.p0,
+                                clipBehavior: Clip.hardEdge,
+                                child: Container(
+                                    padding: AppPadding.p8,
+                                    child: Column(children: [
+                                      Text(controller.workout.value.exercises[index].name),
+                                      Text(controller.workout.value.exercises[index].exerciseType.name),
+                                    ])
+                                ),
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) => const SizedBox(height: AppSpacing.s8)
+                        );
+                      }
+                      return Container(
+                        height: 600,
+                        child: Center(
+                          child: Text('noExercise'.tr),
                         ),
                       );
-                    }, separatorBuilder: (BuildContext context, int index) => const SizedBox(width: AppSpacing.s8)
-                )) : Center(
-                    child: Text('noExercise'.tr)
-                ),
-            )
-          ]
+                    })
+              ]),
         ),
       ),
     );

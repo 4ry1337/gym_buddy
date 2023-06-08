@@ -33,16 +33,16 @@ class ProgramPage extends GetView<ProgramController> {
           children: [
             Container(
               padding: AppPadding.p16h,
-              child: Obx(()=>Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  Obx(()=>Text(
                     controller.program.value.title,
                     style: AppTypography.h5,
-                  ),
+                  )),
                   const SizedBox(height: AppSpacing.s8),
-                  Text.rich(
+                  Obx(()=>Text.rich(
                       TextSpan(
                           text: 'createdBy'.tr,
                           children: [
@@ -50,14 +50,14 @@ class ProgramPage extends GetView<ProgramController> {
                             TextSpan(text: controller.program.value.createdBy,),
                           ]
                       )
-                  ),
+                  )),
                   const SizedBox(height: AppSpacing.s8),
-                  Text(
+                  Obx(()=>Text(
                     DateFormat('dd MM yyyy').format(controller.program.value.createdAt!.toDate()),
                     style: AppTypography.subtitle,
-                  ),
+                  )),
                 ],
-              )),
+              ),
             ),
             const SizedBox(height: AppSpacing.s16),
             Expanded(

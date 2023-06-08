@@ -15,17 +15,20 @@ class AuthPage extends GetView<AuthController> {
       Tab(text: 'signUp'.tr),
       Tab(text: 'signIn'.tr),
     ];
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          flexibleSpace: SafeArea(
-            child: Container(
+    return Scaffold(
+      body: DefaultTabController(
+        length: tabs.length,
+        child: Stack(
+          children: [
+            const TabBarView(
+              physics: ScrollPhysics(),
+              children: [
+                SignUpWidget(),
+                SignInWidget(),
+              ],
+            ),
+            Container(
               decoration: BoxDecoration(
-                color: AppColors.accent,
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -35,26 +38,20 @@ class AuthPage extends GetView<AuthController> {
                   ],
                 ),
               ),
-              child: TabBar(
-                padding: EdgeInsets.only(right: Get.width/2),
-                indicator: UnderlineTabIndicator(
-                  borderRadius: AppBorderRadius.br16,
-                  borderSide: BorderSide(
-                      width: 2, color: Theme.of(context).colorScheme.primary),
+              child: SafeArea(
+                child: TabBar(
+                  padding: EdgeInsets.only(right: Get.width/2),
+                  indicator: UnderlineTabIndicator(
+                    borderRadius: AppBorderRadius.br16,
+                    borderSide: BorderSide(width: 2, color: Theme.of(context).colorScheme.primary),
+                  ),
+                  dividerColor: AppColors.transparent,
+                  overlayColor: MaterialStateProperty.all(AppColors.transparent),
+                  splashFactory: NoSplash.splashFactory,
+                  tabs: tabs,
                 ),
-                dividerColor: AppColors.transparent,
-                overlayColor: MaterialStateProperty.all(AppColors.transparent),
-                splashFactory: NoSplash.splashFactory,
-                tabs: tabs,
               ),
             ),
-          ),
-        ),
-        body: const TabBarView(
-          physics: ScrollPhysics(),
-          children: [
-            SignUpWidget(),
-            SignInWidget(),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:gym_buddy/Modules/Routes.dart';
@@ -25,13 +26,20 @@ class VerificationController extends GetxController{
   }
 
   Future<void> manuallyCheckEmailVerificationStatus() async {
-    Get.offAllNamed(Routes.home);
+    FirebaseAuth.instance.currentUser?.reload();
+    final user = FirebaseAuth.instance.currentUser;
+    if(user!.emailVerified){
+      AppService.instance.setInitialScreen(user);
+    }
   }
 
   Future<void> setTimerForAutoRedirect() async {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if(AppService.instance.firebaseUser.value!.emailVerified){
+      FirebaseAuth.instance.currentUser?.reload();
+      final user = FirebaseAuth.instance.currentUser;
+      if(user!.emailVerified){
         timer.cancel();
+        AppService.instance.setInitialScreen(user);
       }
     });
   }

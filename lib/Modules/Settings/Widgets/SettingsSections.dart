@@ -25,7 +25,7 @@ class SettingsSection extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
               itemBuilder: (context, index) => actions[index],
-              separatorBuilder: (context, index) => const Divider(thickness: 1, height: 1,),
+              separatorBuilder: (context, index) => const Divider(),
               itemCount: actions.length
           ),
         ),

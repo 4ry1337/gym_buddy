@@ -22,12 +22,15 @@ class SettingsService{
   static const String _currentLanguage = 'current_language';
   static const String _sex = 'sex';
   static const String _unitsOfMeasure = 'unit_of_measure';
+  static const String _theme = 'theme';
 
   static Future<void> setCurrentLanguage(String languageName) => _sharedPreferences.setString(_currentLanguage, languageName);
 
   static Future<void> setSex(bool sex) => _sharedPreferences.setBool(_sex, sex);
 
   static Future<void> setUnitOfMeasure(String uom) => _sharedPreferences.setString(_unitsOfMeasure, uom);
+
+  static Future<void> setTheme(String uom) => _sharedPreferences.setString(_theme, uom);
 
   static bool getSex(){
     bool? sex = _sharedPreferences.getBool(_sex);
@@ -56,5 +59,13 @@ class SettingsService{
       return 'English';
     }
     return langName;
+  }
+
+  static getCurrentTheme() {
+    String? themeName = _sharedPreferences.getString(_theme);
+    if(themeName == null){
+      return 'Dark';
+    }
+    return themeName;
   }
 }

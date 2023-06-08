@@ -8,21 +8,17 @@ class ProgramController extends GetxController {
   static ProgramController get instance => Get.find();
 
   toEditProgramPage() => Get.toNamed(Routes.program + Routes.edit);
-  toWorkoutPage(WorkoutModel workout)=>Get.toNamed(Routes.program + Routes.edit + Routes.workout, arguments: {
-    "workout": workout,
-  });
-  toAddWorkoutPage()=>Get.toNamed(Routes.program + Routes.edit + Routes.workout, arguments: {
-    "workout": null,
-  });
+  toWorkoutPage(WorkoutModel workout)=>Get.toNamed(Routes.program + Routes.edit + Routes.workout, arguments: {"workout": workout});
+  toAddWorkoutPage()=>Get.toNamed(Routes.program + Routes.edit + Routes.workout, arguments: {"workout": null});
 
   final ProgramModel? programModel = Get.arguments['programModel'];
 
-  final Rx<ProgramModel> program = ProgramModel(
+  final Rx<ProgramModel> program = Rx<ProgramModel>(ProgramModel(
       title: 'new program',
       createdBy: AppService.instance.user.value.username,
       workouts: [],
       ownedBy: AppService.instance.user.value.username
-  ).obs;
+  ));
 
   final programTitle = TextEditingController();
 
@@ -35,6 +31,12 @@ class ProgramController extends GetxController {
     super.onInit();
   }
 
+  @override
+  onClose(){
+    programTitle.dispose();
+    super.onClose();
+  }
+
   createProgram() async {
     program.value.title = programTitle.text.trim();
     await ProgramService.instance.createProgram(
@@ -45,7 +47,9 @@ class ProgramController extends GetxController {
   }
 
   updateProgram() async {
-    program.value.title = programTitle.text.trim();
+    program.update((val) {
+      val?.title = programTitle.text.trim();
+    });
     await ProgramService.instance.updateProgram(
         user: AppService.instance.user.value,
         program: program.value
@@ -59,6 +63,7 @@ class ProgramController extends GetxController {
         user: AppService.instance.user.value,
         program: program.value
     );
+    update();
     Get.offNamedUntil(Routes.home, (Route<dynamic> route) => route.isFirst);
   }
 }

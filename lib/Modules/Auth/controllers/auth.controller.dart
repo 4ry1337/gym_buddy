@@ -17,6 +17,7 @@ class AuthController extends GetxController{
 
   Future<void> signIn(String email, String password) async {
     AuthService.instance.signIn(email, password);
+    AppService.instance.setInitialScreen(AppService.instance.firebaseUser);
   }
 
   Future<void> signUp(String username, String email, String password, String repaetedPassword) async {
@@ -26,20 +27,22 @@ class AuthController extends GetxController{
     }
     await AuthService.instance.signUp(email, password);
     final user = UserModel(
-      id: AppService.instance.firebaseUser.value!.uid,
+      id: AppService.instance.firebaseUserID,
       username: username,
       email: email,
       createdAt: Timestamp.now(),
     );
     await UserService.instance.createUser(user);
+    AppService.instance.setInitialScreen(AppService.instance.firebaseUser);
   }
 
   Future<void> signUpGuest() async {
     await AuthService.instance.signInAnonymously();
     final user = UserModel(
-      id: AppService.instance.firebaseUser.value!.uid,
+      id: AppService.instance.firebaseUserID,
       createdAt: Timestamp.now(),
     );
     await UserService.instance.createUser(user);
+    AppService.instance.setInitialScreen(AppService.instance.firebaseUser);
   }
 }

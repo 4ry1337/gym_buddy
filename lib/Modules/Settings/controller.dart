@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:gym_buddy/Service/index.dart';
@@ -70,7 +71,27 @@ class SettingsController extends GetxController{
     }
   }
 
-  void signOut(){
-    AuthService.instance.signOut();
+  //theme
+  Rx<String> selectedTheme = SettingsService.getCurrentTheme().obs;
+
+  Rx<List<String>> themes = Rx<List<String>>([]);
+
+  changeTheme(String themeName) async {
+    try {
+      selectedTheme.value = themeName;
+      /*Get.changeTheme(themes[]);*/
+      EasyLoading.showSuccess('languageChanged'.tr);
+    } catch(e) {
+      EasyLoading.showError('error'.tr);
+    }
+  }
+
+  //sign out
+  void signOut() async {
+    if(AppService.instance.firebaseUserIsAnonymous){
+      await UserService.instance.deleteUser(AppService.instance.user.value);
+    }
+    await AuthService.instance.signOut();
+    AppService.instance.setInitialScreen(AppService.instance.firebaseUser);
   }
 }

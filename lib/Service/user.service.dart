@@ -50,4 +50,11 @@ class UserService extends GetxService {
           EasyLoading.showError('error'.tr);
     });
   }
+
+  deleteUser(UserModel user) async {
+    await _db
+        .collection("Users")
+        .doc(user.id)
+        .delete();
+  }
 }

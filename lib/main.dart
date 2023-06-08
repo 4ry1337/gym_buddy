@@ -31,7 +31,8 @@ class App extends StatelessWidget {
           locale: SettingsService.getCurrentLocale(),
           debugShowCheckedModeBanner: false,
           fallbackLocale: LocalizationService.defaultLanguage,
-          theme: AppTheme.darkTheme,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           home: Builder(
             builder: (BuildContext context){
               Get.put(AppService());

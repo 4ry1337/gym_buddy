@@ -15,7 +15,7 @@ class ProgramService extends GetxService {
 
   fetchPrograms(UserModel user) async {
     List<ProgramModel> programs = [];
-    await _db.collection("Users").doc(user.id).collection('Programs').get().then(
+    await _db.collection("Users").doc(user.id).collection('Programs').orderBy('createdAt', descending: true).get().then(
             (programSnapshots){
               for(var programSnapshot in programSnapshots.docs){
                 programs.add(ProgramModel.fromSnapshot(programSnapshot));
@@ -25,8 +25,8 @@ class ProgramService extends GetxService {
     return programs;
   }
 
-  Stream streamPrograms({required UserModel user}){
-    return _db.collection("Users").doc(user.id).collection("Programs").snapshots();
+  Stream streamPrograms({required UserModel user}) {
+    return _db.collection("Users").doc(user.id).collection("Programs").orderBy('createdAt', descending: true).snapshots();
   }
 
   createProgram({required UserModel user, required ProgramModel program}) async {
