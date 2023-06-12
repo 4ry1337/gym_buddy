@@ -88,7 +88,7 @@ class SignInWidget extends GetView<AuthController>{
                   const Spacer(),
                   OutlinedButton(
                       onPressed: () {
-                        controller.signUpGuest();
+                        controller.signInAnonymously();
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,7 +110,7 @@ class SignInWidget extends GetView<AuthController>{
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'signin'.tr,
+                            'signIn'.tr,
                             style: AppTypography.subtitle.copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(width: AppSpacing.s8),

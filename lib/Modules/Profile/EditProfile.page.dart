@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_buddy/Shared/index.dart';
+import 'package:gym_buddy/Shared/Widgets/index.dart';
 import 'package:iconsax/iconsax.dart';
-
-import '../../Shared/Widgets/index.dart';
-import '../../Shared/index.dart';
 import 'editprofile.controller.dart';
 
 class EditProfilePage extends GetView<EditProfileController> {
@@ -60,7 +59,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                     onPressed: (){
                       controller.editUser();
                     },
-                    child: Text('Save'.tr)
+                    child: Text('save'.tr)
                 )
               ]),
         ),

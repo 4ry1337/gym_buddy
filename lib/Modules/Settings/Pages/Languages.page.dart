@@ -22,8 +22,8 @@ class LanguagesPage extends GetView<SettingsController> {
               padding: AppPadding.p16h,
               child: TextField(
                 onChanged: (value) => controller.filterLanguages(value),
-                decoration: const InputDecoration(
-                  labelText: 'Search',
+                decoration: InputDecoration(
+                  labelText: 'search'.tr,
                   suffixIcon: Icon(Icons.search),
                 ),
               ),
@@ -33,7 +33,7 @@ class LanguagesPage extends GetView<SettingsController> {
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return RadioListTile(
+                  return Obx(()=>RadioListTile(
                     value: controller.languages.value[index],
                     groupValue: controller.selectedLanguage.value,
                     onChanged: (val) {
@@ -41,8 +41,8 @@ class LanguagesPage extends GetView<SettingsController> {
                         controller.updateLanguage(val);
                       }
                     },
-                    title: Text(controller.languages.value[index]),
-                  );
+                    title: Text(controller.languages.value[index].tr),
+                  ));
                 },
                 itemCount: controller.languages.value.length,
               ),

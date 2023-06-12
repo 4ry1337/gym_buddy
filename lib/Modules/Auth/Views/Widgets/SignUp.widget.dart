@@ -43,7 +43,7 @@ class SignUpWidget extends GetView<AuthController> {
                     TextFormField(
                       decoration: InputDecoration(
                         label: Text('username'.tr),
-                        hintText: 'exampleUsername'.tr,
+                        hintText: 'usernameExample'.tr,
                       ),
                       controller: controller.username,
                     ),
@@ -51,7 +51,7 @@ class SignUpWidget extends GetView<AuthController> {
                     TextFormField(
                       decoration: InputDecoration(
                         label: Text('email'.tr),
-                        hintText: 'exampleEmail'.tr,
+                        hintText: 'emailExample'.tr,
                       ),
                       controller: controller.email,
                     ),
@@ -96,7 +96,7 @@ class SignUpWidget extends GetView<AuthController> {
                   const Spacer(),
                   OutlinedButton(
                       onPressed: () {
-                        controller.signUpGuest();
+                        controller.signInAnonymously();
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

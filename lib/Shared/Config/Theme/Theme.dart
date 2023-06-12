@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../index.dart';
 
@@ -48,6 +47,31 @@ class AppTheme {
           secondary: AppColors.white,
           onSecondary: Color(0xff566EED),
           background: Color(0xfff7f7ff),
+          onBackground: AppColors.black,
+          error: AppColors.error,
+          onError: AppColors.white,
+          surface: Color(0xffffffff),
+          onSurface: AppColors.black,
+          surfaceTint: AppColors.transparent
+      ),
+    );
+  }
+  static ThemeData get pinkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+        foregroundColor: AppColors.black,
+        backgroundColor: AppColors.transparent,
+      ),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xffED56E0),
+          onPrimary: AppColors.white,
+          secondary: AppColors.white,
+          onSecondary: Color(0xffED56E0),
+          background: Color(0xffFFF3FE),
           onBackground: AppColors.black,
           error: AppColors.error,
           onError: AppColors.white,

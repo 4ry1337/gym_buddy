@@ -5,12 +5,7 @@ import '../Routes.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find();
-  @override
-  onReady() {
-    AppService.instance.listenUser();
-    AppService.instance.listenProgram();
-    super.onReady();
-  }
+
   toProfilePage() => Get.toNamed(Routes.profile);
   toProgramPage(ProgramModel programModel) => Get.toNamed(Routes.program, arguments: {
     "programModel": programModel
@@ -18,4 +13,18 @@ class HomeController extends GetxController {
   toAddProgramPage() => Get.toNamed(Routes.program + Routes.edit, arguments: {
     "programModel": null
   });
+
+  @override
+  void onInit() {
+    AppService.instance.listenUser();
+    AppService.instance.listenPrograms();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    AppService.instance.cancelPrograms();
+    AppService.instance.cancelUser();
+    super.onClose();
+  }
 }

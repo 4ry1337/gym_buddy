@@ -7,6 +7,7 @@ import 'package:gym_buddy/Service/index.dart';
 
 class VerificationController extends GetxController{
   static VerificationController get instance => Get.find();
+
   void toAuth() => Get.offAllNamed(Routes.auth);
 
   late Timer _timer;
@@ -17,11 +18,16 @@ class VerificationController extends GetxController{
     sendVerificationEmail();
     setTimerForAutoRedirect();
   }
+
   Future<void> sendVerificationEmail() async {
     try {
-      await AuthService.instance.sendVerificationEmail();
+      await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      EasyLoading.showError(e.message ?? 'Unknown Error');
+      throw FirebaseAuthException(code: e.code);
     } catch (e) {
       EasyLoading.showError(e.toString());
+      throw Exception(e.toString());
     }
   }
 

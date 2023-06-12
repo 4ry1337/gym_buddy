@@ -25,8 +25,8 @@ class ProgramService extends GetxService {
     return programs;
   }
 
-  Stream streamPrograms({required UserModel user}) {
-    return _db.collection("Users").doc(user.id).collection("Programs").orderBy('createdAt', descending: true).snapshots();
+  Stream streamPrograms(String uid) {
+    return _db.collection("Users").doc(uid).collection("Programs").orderBy('createdAt', descending: true).snapshots();
   }
 
   createProgram({required UserModel user, required ProgramModel program}) async {

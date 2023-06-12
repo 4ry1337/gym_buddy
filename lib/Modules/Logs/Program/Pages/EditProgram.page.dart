@@ -21,7 +21,7 @@ class EditProgramPage extends GetView<ProgramController> {
         title: TextField(
           controller: controller.programTitle,
           decoration: InputDecoration(
-            hintText: 'newProgram'.tr,
+            label: Text('programName'.tr),
           ),
         ),
         actions: [
@@ -111,15 +111,6 @@ class EditProgramPage extends GetView<ProgramController> {
                 ),
               ),
             ),
-            Container(
-              padding: AppPadding.p16,
-              child: FilledButton(
-                onPressed: (){
-                  controller.programModel != null ? controller.updateProgram() : controller.createProgram();
-                },
-                child: controller.programModel != null ? Text('edit'.tr) : Text('create'.tr),
-              ),
-            )
           ],
         ),
       ),

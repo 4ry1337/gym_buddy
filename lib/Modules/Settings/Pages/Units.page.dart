@@ -17,37 +17,32 @@ class UnitsPage extends GetView<SettingsController> {
         title: Text('units'.tr),
         leading: const BackButton(),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SettingsSection(actions: [
-                Obx(() => RadioListTile(
-                      title: Text('metric'.tr),
-                      value: controller.getUnitsOfMeasure[0],
-                      groupValue: controller.selectedUnitOfMeasure.value,
-                      onChanged: (val) {
-                        if (val != null) {
-                          controller.updateUnitsOfMeasure(val);
-                        }
-                      },
-                    )),
-                Obx(() => RadioListTile(
-                      title: Text('imperial'.tr),
-                      value: controller.getUnitsOfMeasure[1],
-                      groupValue: controller.selectedUnitOfMeasure.value,
-                      onChanged: (val) {
-                        if (val != null) {
-                          controller.updateUnitsOfMeasure(val);
-                        }
-                      },
-                    )),
-              ])
-            ],
-          ),
+      body: SafeArea(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            Obx(() => RadioListTile(
+              title: Text('metric'.tr),
+              value: controller.getUnitsOfMeasure[0],
+              groupValue: controller.selectedUnitOfMeasure.value,
+              onChanged: (val) {
+                if (val != null) {
+                  controller.updateUnitsOfMeasure(val);
+                }
+              },
+            )),
+            Obx(() => RadioListTile(
+              title: Text('imperial'.tr),
+              value: controller.getUnitsOfMeasure[1],
+              groupValue: controller.selectedUnitOfMeasure.value,
+              onChanged: (val) {
+                if (val != null) {
+                  controller.updateUnitsOfMeasure(val);
+                }
+              },
+            )),
+          ],
         ),
       ),
     );

@@ -1,19 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:gym_buddy/Modules/Home/controller.dart';
 import 'package:gym_buddy/Service/index.dart';
+import 'package:gym_buddy/Service/theme.service.dart';
+import 'package:gym_buddy/Shared/Config/Theme/Theme.dart';
 import 'package:gym_buddy/Shared/Constants/enums.dart';
 
 import '../Routes.dart';
 
 class SettingsController extends GetxController{
   static SettingsController get instance => Get.find();
-  toUnitsPage() => Get.toNamed(Routes.profile + Routes.settings + Routes.units);
-  toGuidePage() => Get.toNamed(Routes.profile + Routes.settings + Routes.guide);
-  toAboutUsPage() => Get.toNamed(Routes.profile + Routes.settings + Routes.aboutUs);
-  toPrivacyPolicyPage() => Get.toNamed(Routes.profile + Routes.settings + Routes.privacyPolicy);
-  toLanguagesPage() => Get.toNamed(Routes.profile + Routes.settings + Routes.languages);
-  toNotificationsPage() => Get.toNamed(Routes.profile + Routes.settings + Routes.notifications);
+  toUnitsPage() => Get.toNamed(Get.currentRoute + Routes.units);
+  toGuidePage() => Get.toNamed(Get.currentRoute + Routes.guide);
+  toAboutUsPage() => Get.toNamed(Get.currentRoute + Routes.aboutUs);
+  toPrivacyPolicyPage() => Get.toNamed(Get.currentRoute + Routes.privacyPolicy);
+  toLanguagesPage() => Get.toNamed(Get.currentRoute + Routes.languages);
+  toNotificationsPage() => Get.toNamed(Get.currentRoute + Routes.notifications);
+  toThemePage() => Get.toNamed(Get.currentRoute + Routes.themes);
 
   @override
   onInit(){
@@ -74,24 +79,38 @@ class SettingsController extends GetxController{
   //theme
   Rx<String> selectedTheme = SettingsService.getCurrentTheme().obs;
 
-  Rx<List<String>> themes = Rx<List<String>>([]);
+  RxList<String> themes = ThemeService.supportedThemes.keys.toList().obs;
 
   changeTheme(String themeName) async {
     try {
       selectedTheme.value = themeName;
-      /*Get.changeTheme(themes[]);*/
-      EasyLoading.showSuccess('languageChanged'.tr);
+      await SettingsService.setTheme(themeName);
+      Get.changeTheme(ThemeService.supportedThemes[themeName]!.themeData);
+      Get.changeThemeMode(ThemeService.supportedThemes[themeName]!.themeMode);
+      EasyLoading.showSuccess('themeChanged'.tr);
     } catch(e) {
       EasyLoading.showError('error'.tr);
     }
   }
 
   //sign out
-  void signOut() async {
-    if(AppService.instance.firebaseUserIsAnonymous){
+  Future<void> signOut() async {
+    if(AppService.instance.firebaseUser!.isAnonymous){
       await UserService.instance.deleteUser(AppService.instance.user.value);
     }
-    await AuthService.instance.signOut();
+    await FirebaseAuth.instance.signOut();
     AppService.instance.setInitialScreen(AppService.instance.firebaseUser);
+  }
+
+  Future<void> deleteUser() async {
+    try {
+      await FirebaseAuth.instance.currentUser!.delete();
+    } on FirebaseAuthException catch (e){
+      EasyLoading.showError(e.message ?? 'Unknown Error');
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+      throw Exception(e.toString());
+    }
   }
 }

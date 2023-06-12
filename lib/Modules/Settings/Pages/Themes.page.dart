@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_buddy/Shared/Widgets/index.dart';
 import '../controller.dart';
 
-import '../../../Shared/index.dart';
-import '../../../Shared/Widgets/index.dart';
-
-class LanguagesPage extends GetView<SettingsController> {
-  const LanguagesPage({Key? key}) : super(key: key);
+class ThemesPage extends GetView<SettingsController> {
+  const ThemesPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +18,7 @@ class LanguagesPage extends GetView<SettingsController> {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return RadioListTile(
+            return Obx(()=>RadioListTile(
               value: controller.themes.value[index],
               groupValue: controller.selectedTheme.value,
               onChanged: (val) {
@@ -28,8 +26,8 @@ class LanguagesPage extends GetView<SettingsController> {
                   controller.changeTheme(val);
                 }
               },
-              title: Text(controller.themes.value[index]),
-            );
+              title: Text(controller.themes.value[index].tr),
+            ));
           },
           itemCount: controller.themes.value.length,
         ),

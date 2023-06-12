@@ -45,7 +45,7 @@ class Calendar extends StatelessWidget {
                 todayDecoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.onInverseSurface,
+                    color: Theme.of(context).colorScheme.primary,
                     width: 1,
                   ),
                 ),

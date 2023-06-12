@@ -17,14 +17,16 @@ class LocalizationService extends Translations {
 
   // supported languages
   static Map<String, Locale> supportedLanguages = {
-    'English': const Locale('en', 'US'),
-    'Русский': const Locale('ru', 'RU'),
+    'english': const Locale('en', 'US'),
+    'russian': const Locale('ru', 'RU'),
+    'kazakh': const Locale('kk', 'KZ'),
   };
 
   @override
   Map<String, Map<String, String>> get keys => {
     'en_US': enUs,
     'ru_RU': ruRu,
+    'kk_KZ': kkKZ,
   };
 }
 

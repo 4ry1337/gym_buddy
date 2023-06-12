@@ -30,7 +30,7 @@ class SettingsService{
 
   static Future<void> setUnitOfMeasure(String uom) => _sharedPreferences.setString(_unitsOfMeasure, uom);
 
-  static Future<void> setTheme(String uom) => _sharedPreferences.setString(_theme, uom);
+  static Future<void> setTheme(String themeName) => _sharedPreferences.setString(_theme, themeName);
 
   static bool getSex(){
     bool? sex = _sharedPreferences.getBool(_sex);
@@ -45,12 +45,14 @@ class SettingsService{
     return UnitsOfMeasure.values.byName(uom);
   }
 
+  static isLanguageSupported(String languageName) => LocalizationService.supportedLanguages.containsKey(languageName);
+
   static Locale getCurrentLocale(){
     String? langName = _sharedPreferences.getString(_currentLanguage);
-    if(langName == null){
-      return LocalizationService.defaultLanguage;
+    if (langName != null && isLanguageSupported(langName)){
+      return LocalizationService.supportedLanguages[langName]!;
     }
-    return LocalizationService.supportedLanguages[langName]!;
+    return LocalizationService.defaultLanguage;
   }
 
   static String getCurrentLanguage(){
@@ -61,10 +63,10 @@ class SettingsService{
     return langName;
   }
 
-  static getCurrentTheme() {
+  static String getCurrentTheme() {
     String? themeName = _sharedPreferences.getString(_theme);
     if(themeName == null){
-      return 'Dark';
+      return 'dark';
     }
     return themeName;
   }

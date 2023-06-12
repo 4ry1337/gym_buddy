@@ -32,7 +32,16 @@ class EditWorkoutPage extends GetView<WorkoutController> {
                   'deleteWorkoutQuery'.tr,
                 ),
                 actions: [
-
+                  TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text('cancel'.tr)
+                  ),
+                  TextButton(
+                      onPressed: (){
+                        //controller.deleteWorkout();
+                      },
+                      child: Text('delete'.tr)
+                  ),
                 ],
               );
             },
@@ -50,7 +59,7 @@ class EditWorkoutPage extends GetView<WorkoutController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'exercies'.tr,
+                        'exercises'.tr,
                         style: AppTypography.h4,
                       ),
                       IconButton(

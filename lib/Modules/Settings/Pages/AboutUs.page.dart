@@ -8,18 +8,18 @@ class AboutUsPage extends StatelessWidget {
   const AboutUsPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        leading: const BackButton(),
-        title: Text('aboutUs'.tr),
-      ),
-      body: SingleChildScrollView(
-        child: SafeArea(
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          leading: const BackButton(),
+          title: Text('aboutUs'.tr),
+        ),
+        body: SingleChildScrollView(
           child: Padding(
             padding: AppPadding.p16,
             child: Column(
-              children: const [
-                Placeholder(),
+              children: [
+                Text('aboutUsText'.tr),
               ],
             ),
           ),

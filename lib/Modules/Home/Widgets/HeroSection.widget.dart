@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gym_buddy/Shared/index.dart';
 import 'package:iconsax/iconsax.dart';
-
-import '../../../Shared/index.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({
@@ -38,8 +38,8 @@ class HeroSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: workoutTitle != null ? [
-                      const Text(
-                        'Today', style: AppTypography.subtitle,
+                      Text(
+                        'today'.tr, style: AppTypography.subtitle,
                       ),
                       Text(
                         workoutTitle!,
@@ -47,7 +47,7 @@ class HeroSection extends StatelessWidget {
                       ),
                     ] : [
                       Text(
-                        'no program is selected',
+                        'noSelectedProgram'.tr,
                         style: AppTypography.h1.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ],

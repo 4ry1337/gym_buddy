@@ -23,7 +23,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'privacyPolicy'.tr,
+                'privacyPolicyText'.tr,
               )
             ],
           ),

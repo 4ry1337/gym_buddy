@@ -16,15 +16,14 @@ class HomePage extends GetView<HomeController> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        title: Text.rich(
-            TextSpan(
-                text: 'hello'.tr,
-                children: AppService.instance.user.value.username != null ? [
-                  const TextSpan(text: ', '),
-                  TextSpan(text: AppService.instance.user.value.username),
-                ] : []
-            )
-        ),
+        title: Obx(() => Text.rich(TextSpan(
+            text: 'hello'.tr,
+            children: AppService.instance.user.value.username != null
+                ? [
+                    const TextSpan(text: ', '),
+                    TextSpan(text: AppService.instance.user.value.username),
+                  ]
+                : []))),
         actions: [
           IconButton(
             onPressed: () {
@@ -32,8 +31,7 @@ class HomePage extends GetView<HomeController> {
             },
             icon: const Icon(Iconsax.profile_circle) ??
                 CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/male.jpg')
-                ),
+                    backgroundImage: AssetImage('assets/images/male.jpg')),
           ),
         ],
       ),
@@ -45,26 +43,26 @@ class HomePage extends GetView<HomeController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                  padding: AppPadding.p16h,
+                  padding: AppPadding.p16,
                   child: HeroSection(
-                    workoutTitle: AppService.instance.user.value.currentProgramId,
+                    workoutTitle:
+                    AppService.instance.user.value.currentProgramId,
                   )
               ),
-              Container(
+              /*Container(
                 padding: AppPadding.p16,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('programs'.tr, style: AppTypography.subtitle),
                     IconButton(
-                        onPressed: (){
+                        onPressed: () {
                           controller.toAddProgramPage();
                         },
-                        icon: Icon(Iconsax.add)
-                    )
+                        icon: Icon(Iconsax.add))
                   ],
                 ),
-              ),
+              ),*/
               SizedBox(
                 height: 100,
                 child: SingleChildScrollView(
@@ -74,40 +72,44 @@ class HomePage extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: AppSpacing.s16),
-                      Obx(()=> ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: AppService.instance.programs.value.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                margin: AppPadding.p0,
-                                clipBehavior: Clip.hardEdge,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.toProgramPage(AppService.instance.programs.value[index]);
-                                  },
-                                  child: Container(
-                                      width: 200,
-                                      padding: AppPadding.p8,
-                                      child: Center(child: Text(AppService.instance.programs.value[index].title))),
-                                ),
-                              );
-                            }, separatorBuilder: (BuildContext context, int index) => const SizedBox(width: AppSpacing.s8)
-                      )),
+                      Obx(() => ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount:
+                              AppService.instance.programs.value.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              margin: AppPadding.p0,
+                              clipBehavior: Clip.hardEdge,
+                              child: InkWell(
+                                onTap: () {
+                                  controller.toProgramPage(AppService
+                                      .instance.programs.value[index]);
+                                },
+                                child: Container(
+                                    width: 200,
+                                    padding: AppPadding.p8,
+                                    child: Center(
+                                        child: Text(AppService
+                                            .instance
+                                            .programs
+                                            .value[index]
+                                            .title))),
+                              ),
+                            );
+                          },
+                          separatorBuilder:
+                              (BuildContext context, int index) =>
+                                  const SizedBox(width: AppSpacing.s8))),
                       const SizedBox(width: AppSpacing.s16),
                     ],
                   ),
                 ),
               ),
-              Container(
-                padding: AppPadding.p16,
-                child: Text('history'.tr, style: AppTypography.subtitle),
-              ),
               Flexible(
                   child: Container(
-                      padding: AppPadding.p16h,
-                      child: Calendar()
-                  )
+                      padding: AppPadding.p16,
+                      child: Calendar())
               ),
             ],
           ),

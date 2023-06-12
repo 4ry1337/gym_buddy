@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_buddy/Modules/Home/controller.dart';
+import 'package:gym_buddy/Service/index.dart';
+import 'package:gym_buddy/Shared/index.dart';
+import 'package:gym_buddy/Shared/Widgets/index.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import '../../Service/index.dart';
-import '../../Shared/Widgets/index.dart';
-import '../../Shared/index.dart';
 import 'profile.controller.dart';
 
 class ProfilePage extends GetView<ProfileController> {
@@ -62,14 +63,21 @@ class ProfilePage extends GetView<ProfileController> {
                             style: AppTypography.h3.copyWith(fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            AppService.instance.user.value.email ?? 'link with google or appleid',
+                            AppService.instance.user.value.email ?? 'linkWithCredential',
                             style: AppTypography.subtitle,
                           ),
                           if(AppService.instance.user.value.createdAt != null) ...[
                             const SizedBox(height: AppSpacing.s8),
-                            Text(
-                              "Joined ${DateFormat('dd MM yyyy').format(AppService.instance.user.value.createdAt!.toDate())}",
-                              style: AppTypography.subtitle.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+                            Text.rich(
+                              TextSpan(
+                                style: AppTypography.subtitle.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+                                text: 'joined'.tr,
+                                children: [
+                                  TextSpan(
+                                    text: DateFormat(' dd MM yyyy').format(AppService.instance.user.value.createdAt!.toDate())
+                                  ),
+                                ],
+                              )
                             ),
                           ],
                         ],

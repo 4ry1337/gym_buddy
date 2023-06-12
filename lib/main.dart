@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gym_buddy/Service/theme.service.dart';
 import 'Modules/Routes.dart';
 import 'Service/index.dart';
 import 'Shared/index.dart';
@@ -31,8 +32,9 @@ class App extends StatelessWidget {
           locale: SettingsService.getCurrentLocale(),
           debugShowCheckedModeBanner: false,
           fallbackLocale: LocalizationService.defaultLanguage,
-          theme: AppTheme.lightTheme,
+          theme: ThemeService.supportedThemes[SettingsService.getCurrentTheme()]!.themeData,
           darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeService.supportedThemes[SettingsService.getCurrentTheme()]!.themeMode,
           home: Builder(
             builder: (BuildContext context){
               Get.put(AppService());

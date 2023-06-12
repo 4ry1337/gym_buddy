@@ -22,6 +22,7 @@ class Routes {
   static String privacyPolicy = '/privacyPolicy';
   static String guide = '/guide';
   static String aboutUs = '/aboutUs';
+  static String themes = '/themes';
 
   static final routes = [
     GetPage(
@@ -122,6 +123,11 @@ class Routes {
                 GetPage(
                   name: Routes.aboutUs,
                   page: () => const AboutUsPage(),
+                  transition: Transition.fadeIn,
+                ),
+                GetPage(
+                  name: Routes.themes,
+                  page: () => const ThemesPage(),
                   transition: Transition.fadeIn,
                 ),
               ]),
