@@ -9,6 +9,16 @@ class TranslationStrings {
   static const String kazakh = 'kazakh';
 
   /*Glossary*/
+  static const String set = 'set';
+  static const String sets = 'sets';
+  static const String rep = 'rep';
+  static const String reps = 'reps';
+  static const String weight = 'weight';
+  static const String kg = 'kg';
+  static const String lb = 'lb';
+  static const String km = 'km';
+  static const String mile = 'mile';
+
   static const String program = 'program';
   static const String programs = 'programs';
   static const String history = 'history';

@@ -52,27 +52,34 @@ class Routes {
       transition: Transition.fadeIn,
       children: [
         GetPage(
-            name: Routes.workout,
-            page: () => const WorkoutPage(),
-          binding: WorkoutBinding()
+          name: Routes.edit,
+          page: () => const WorkoutPage(),
+          binding: WorkoutBinding(),
+          transition: Transition.rightToLeft,
         ),
         GetPage(
-          name: Routes.edit,
-          page: () => const EditProgramPage(),
-          binding: ProgramBinding(),
-          transition: Transition.rightToLeft,
+            name: Routes.workout,
+            page: () => const WorkoutPage(),
+          binding: WorkoutBinding(),
           children: [
             GetPage(
-                name: Routes.workout,
-                page: () => const EditWorkoutPage(),
-                binding: WorkoutBinding(),
-              transition: Transition.fadeIn,
+              name: Routes.edit,
+              page: () => const WorkoutPage(),
+              binding: WorkoutBinding(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: Routes.exercise,
+              page: () => const ExercisePage(),
+              binding: ExerciseBinding(),
+              transition: Transition.rightToLeft,
               children: [
                 GetPage(
-                    name: Routes.exercise,
-                    page: () => const AddExercise(),
-                  transition: Transition.fadeIn,
-                )
+                  name: Routes.edit,
+                  page: () => const ExercisePage(),
+                  binding: ExerciseBinding(),
+                  transition: Transition.rightToLeft,
+                ),
               ]
             ),
           ]

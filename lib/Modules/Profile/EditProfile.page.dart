@@ -27,12 +27,7 @@ class EditProfilePage extends GetView<EditProfileController> {
                     children: [
                       Padding(
                         padding: AppPadding.p8,
-                        child: Icon(Iconsax.profile_circle, size: 100, color: Theme.of(context).colorScheme.onBackground,) ??
-                            const CircleAvatar(
-                              backgroundImage:
-                              AssetImage('assets/images/male.jpg'),
-                              radius: 50,
-                            ),
+                        child: Icon(Iconsax.profile_circle, size: 100, color: Theme.of(context).colorScheme.onBackground)
                       ),
                       Positioned(
                         bottom: 0,

@@ -39,10 +39,11 @@ class SettingsService{
 
   static UnitsOfMeasure getCurrentUnitOfMeasure(){
     String? uom = _sharedPreferences.getString(_unitsOfMeasure);
-    if(uom == null){
+    if(uom == null || uom == UnitsOfMeasure.metric.name ){
       return UnitsOfMeasure.metric;
+    } else {
+      return UnitsOfMeasure.imperial;
     }
-    return UnitsOfMeasure.values.byName(uom);
   }
 
   static isLanguageSupported(String languageName) => LocalizationService.supportedLanguages.containsKey(languageName);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Modules/Home/controller.dart';
 import 'package:gym_buddy/Service/index.dart';
 import 'package:gym_buddy/Shared/index.dart';
 import 'package:gym_buddy/Shared/Widgets/index.dart';
@@ -46,11 +45,7 @@ class ProfilePage extends GetView<ProfileController> {
                       height: 100,
                       width: 100,
                       child: FittedBox(
-                        child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)) ??
-                            const CircleAvatar(
-                              backgroundImage:
-                              AssetImage('assets/images/male.jpg'),
-                            ),
+                        child: Icon(Iconsax.profile_circle, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))
                       ),
                     ),
                     const SizedBox(width: AppSpacing.s16),

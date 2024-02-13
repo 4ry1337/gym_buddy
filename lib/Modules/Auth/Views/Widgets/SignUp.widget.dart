@@ -88,7 +88,9 @@ class SignUpWidget extends GetView<AuthController> {
                   ),
                   const SizedBox(width: AppSpacing.s8),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.signInWithGoogle();
+                      },
                       icon: const FaIcon(
                         FontAwesomeIcons.google,
                         size: 24,

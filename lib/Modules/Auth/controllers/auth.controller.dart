@@ -31,16 +31,35 @@ class AuthController extends GetxController{
 
   /* Social */
   Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      if(userCredential.user != null){
+        final user = UserModel(
+          id: userCredential.user!.uid,
+          username: userCredential.user?.displayName,
+          email: userCredential.user?.email,
+          createdAt: Timestamp.now(),
+        );
+        await UserService.instance.createUser(user);
+        AppService.instance.setInitialScreen(userCredential.user);
+      }
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      EasyLoading.showError(e.message ?? 'Unknown Error');
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+      throw Exception(e.toString());
+    }
   }
 
   Future<void> signUp(String username, String email, String password, String repaetedPassword) async {

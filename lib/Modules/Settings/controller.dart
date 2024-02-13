@@ -1,13 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:gym_buddy/Modules/Home/controller.dart';
 import 'package:gym_buddy/Service/index.dart';
 import 'package:gym_buddy/Service/theme.service.dart';
-import 'package:gym_buddy/Shared/Config/Theme/Theme.dart';
 import 'package:gym_buddy/Shared/Constants/enums.dart';
-
 import '../Routes.dart';
 
 class SettingsController extends GetxController{

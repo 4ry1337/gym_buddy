@@ -29,9 +29,7 @@ class HomePage extends GetView<HomeController> {
             onPressed: () {
               controller.toProfilePage();
             },
-            icon: const Icon(Iconsax.profile_circle) ??
-                CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/male.jpg')),
+            icon: const Icon(Iconsax.profile_circle)
           ),
         ],
       ),
@@ -45,8 +43,10 @@ class HomePage extends GetView<HomeController> {
               Container(
                   padding: AppPadding.p16,
                   child: HeroSection(
-                    workoutTitle:
-                    AppService.instance.user.value.currentProgramId,
+                    workoutTitle: AppService.instance.user.value.currentProgramId,
+                    set: (){
+                      controller.start();
+                    },
                   )
               ),
               /*Container(
@@ -75,32 +75,44 @@ class HomePage extends GetView<HomeController> {
                       Obx(() => ListView.separated(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          itemCount:
-                              AppService.instance.programs.value.length,
+                          itemCount: AppService.instance.programs.value.length,
                           itemBuilder: (context, index) {
                             return Card(
                               margin: AppPadding.p0,
                               clipBehavior: Clip.hardEdge,
                               child: InkWell(
                                 onTap: () {
-                                  controller.toProgramPage(AppService
-                                      .instance.programs.value[index]);
+                                  controller.toProgramPage(AppService.instance.programs.value[index]);
                                 },
                                 child: Container(
                                     width: 200,
                                     padding: AppPadding.p8,
                                     child: Center(
-                                        child: Text(AppService
-                                            .instance
-                                            .programs
-                                            .value[index]
-                                            .title))),
+                                        child: Text(AppService.instance.programs.value[index].title)
+                                    )
+                                ),
                               ),
                             );
                           },
-                          separatorBuilder:
-                              (BuildContext context, int index) =>
-                                  const SizedBox(width: AppSpacing.s8))),
+                          separatorBuilder: (BuildContext context, int index) => const SizedBox(width: AppSpacing.s8)
+                      )),
+                      const SizedBox(width: AppSpacing.s8),
+                      Card(
+                        margin: AppPadding.p0,
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            controller.toAddProgramPage();
+                          },
+                          child: Container(
+                              width: 200,
+                              padding: AppPadding.p8,
+                              child: Center(
+                                  child: Text('addProgram'.tr)
+                              )
+                          ),
+                        ),
+                      ),
                       const SizedBox(width: AppSpacing.s16),
                     ],
                   ),

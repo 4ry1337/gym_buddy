@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gym_buddy/Shared/Utils/index.dart';
 
 import 'index.model.dart';
 
@@ -8,6 +9,7 @@ class WorkoutModel {
   String? ownedBy;
   String? createdBy;
   Timestamp? createdAt;
+  //Duration? restTime;
   List<ExerciseModel> exercises;
 
   WorkoutModel({
@@ -17,17 +19,19 @@ class WorkoutModel {
     this.createdAt,
     this.createdBy,
     this.ownedBy,
+    //this.restTime,
   }) {
     createdAt = createdAt ?? Timestamp.now();
   }
 
-  toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       "title": title,
       "ownedBy": ownedBy,
       "createdBy": createdBy,
       "createdAt": createdAt,
-      "exercises": exercises,
+      "exercises": exercises.map((exercise) => exercise.toJSON()),
+      //"restTime": restTime.toString(),
     };
   }
 
@@ -39,6 +43,7 @@ class WorkoutModel {
       ownedBy: data["ownedBy"],
       createdBy: data["createdBy"],
       createdAt: data["createdAt"],
+        //restTime: parseDuration(data["restTime"]),
       exercises: List<ExerciseModel>.from(
           List<Map<String, dynamic>>.from(data['exercises'] ?? [])
               .map((exercise) => ExerciseModel.fromMap(exercise))),
@@ -51,6 +56,7 @@ class WorkoutModel {
       ownedBy: document["ownedBy"],
       createdBy: document["createdBy"],
       createdAt: document["createdAt"],
+      //restTime: parseDuration(document["restTime"]),
       exercises: List<ExerciseModel>.from(
           List<Map<String, dynamic>>.from(document['exercises'] ?? [])
                   .map((exercise) => ExerciseModel.fromMap(exercise))),

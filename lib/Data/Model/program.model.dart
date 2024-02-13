@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_buddy/Data/Model/index.model.dart';
 
@@ -22,16 +24,14 @@ class ProgramModel {
     createdAt = createdAt ?? Timestamp.now();
   }
 
-  toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       "title": title,
       "ownedBy": ownedBy,
       "currentWorkout": currentWorkout,
       "createdBy": createdBy,
       "createdAt": createdAt,
-      "workouts": workouts.map((workout) {
-        workout.toJSON();
-      }),
+      "workouts": workouts.map((workout)=> workout.toJSON()).toList(),
     };
   }
 
@@ -47,9 +47,7 @@ class ProgramModel {
         createdAt: data["createdAt"],
         workouts: List<WorkoutModel>.from(
             List<Map<String, dynamic>>.from(data['workouts'] ?? [])
-                .map((workout) => WorkoutModel.fromMap(workout))
-                ?? []
-        )
+                .map((workout) => WorkoutModel.fromMap(workout)))
     );
   }
 }

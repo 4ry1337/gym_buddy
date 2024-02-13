@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:gym_buddy/Service/app.service.dart';
 import '../../Data/Model/index.model.dart';
@@ -10,7 +11,7 @@ class HomeController extends GetxController {
   toProgramPage(ProgramModel programModel) => Get.toNamed(Routes.program, arguments: {
     "programModel": programModel
   });
-  toAddProgramPage() => Get.toNamed(Routes.program + Routes.edit, arguments: {
+  toAddProgramPage() => Get.toNamed(Routes.program, arguments: {
     "programModel": null
   });
 
@@ -26,5 +27,16 @@ class HomeController extends GetxController {
     AppService.instance.cancelPrograms();
     AppService.instance.cancelUser();
     super.onClose();
+  }
+
+  start() {
+    try {
+      if(AppService.instance.user.value.currentProgramId == null){
+
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+      throw Exception(e.toString());
+    }
   }
 }

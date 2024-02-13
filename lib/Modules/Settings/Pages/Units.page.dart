@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controller.dart';
-
-import '../../../Shared/Widgets/index.dart';
-import '../Widgets/SettingsSections.dart';
+import 'package:gym_buddy/Shared/Widgets/index.dart';
 
 class UnitsPage extends GetView<SettingsController> {
   const UnitsPage({super.key});

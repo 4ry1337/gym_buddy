@@ -34,19 +34,11 @@ class ProgramService extends GetxService {
         .collection("Users")
         .doc(user.id)
         .collection("Programs")
-        .add(program.toJSON())
-        .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
-        .catchError((error, stackTrace) => EasyLoading.showError('error'.tr));
+        .add(program.toJSON());
   }
 
   deleteProgram({required UserModel user, required ProgramModel program}) async {
-    _db.collection("Users").doc(user.id).collection('Programs').doc(program.id).delete()
-        .then((doc) => EasyLoading.showSuccess('deleted'.tr),
-      onError: (e) {
-        print("Error updating document $e");
-        EasyLoading.showError('error'.tr);
-      },
-    );
+    _db.collection("Users").doc(user.id).collection('Programs').doc(program.id).delete();
   }
 
   updateProgram({required UserModel user, required ProgramModel program}) async {
@@ -55,11 +47,6 @@ class ProgramService extends GetxService {
         .doc(user.id)
         .collection("Programs")
         .doc(program.id)
-        .update(program.toJSON())
-        .whenComplete(() => EasyLoading.showSuccess('Success'.tr))
-        .catchError((error, stackTrace) {
-      print(error);
-      EasyLoading.showError('error'.tr);
-    });
+        .update(program.toJSON());
   }
 }
